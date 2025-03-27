@@ -4,11 +4,12 @@
 
 mat-icon {
     width: 35px;
-    height: 35px;
+    height: 300px;
 }
 
 .mat-icon-button i, .mat-icon-button .mat-icon {
     line-height: 35px;
+    padding-bottom:2px;
 }
 
 div {

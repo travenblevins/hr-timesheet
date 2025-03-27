@@ -1,6 +1,6 @@
 mat-card {
     width: 50%;
-    margin: auto;
+    margin-top: 10px;
 }
 
 mat-list-item:hover {
