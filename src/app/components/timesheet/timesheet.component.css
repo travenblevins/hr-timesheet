@@ -2,9 +2,6 @@ h2 {
     text-align: center;
 }
 
-mat-form-field {
-    width: calc(100% - 40px);
-}
 
 .hours {
     margin-top: 30px;
@@ -22,7 +19,7 @@ mat-form-field {
     height: 40px !important;
     background-color: #005cbb !important; /* Example custom color */
     color: white !important; /* Ensures the icon is white */
-    transform: translateY(-5px) !important; /* Move the icon up by 2 pixels */
+    transform: translateY(-6px) !important; /* Move the icon up by 2 pixels */
 }
 
 .hours {
