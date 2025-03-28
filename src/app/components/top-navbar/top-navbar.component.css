@@ -4,13 +4,23 @@
 
 mat-icon {
     width: 35px;
-    height: 300px;
+    height: 30px;
+    display: flex;
+    align-items: center; /* Vertically center the icon */
+    justify-content: center; /* Horizontally center the icon */
 }
 
 .mat-icon-button i, .mat-icon-button .mat-icon {
     line-height: 35px;
     padding-bottom:2px;
 }
+
+.mat-toolbar mat-icon {
+    vertical-align: middle; /* Ensures it aligns with text */
+    position: relative;
+    top: -2px; /* Move up slightly */
+}
+
 
 div {
     margin-left: 10px;
