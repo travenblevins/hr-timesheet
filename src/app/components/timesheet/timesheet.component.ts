@@ -20,6 +20,7 @@ export class TimesheetComponent {
   employees: Employee[] = [];
   employeeId = 0;
   weekdays: string[] = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+titlecase: string;
 
   constructor(
     private route: ActivatedRoute,
