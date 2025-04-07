@@ -10,6 +10,7 @@ import { TopNavbarComponent } from './components/top-navbar/top-navbar.component
 import { AnalyticsTableComponent } from './components/analytics-table/analytics-table.component';
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule } from '@angular/forms'; // Import FormsModule if you are using template-driven forms
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms'; // Import FormsModule if you are u
     BrowserModule,
     AppRoutingModule,
     MaterialModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
