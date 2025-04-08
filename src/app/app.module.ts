@@ -9,8 +9,13 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { TopNavbarComponent } from './components/top-navbar/top-navbar.component';
 import { AnalyticsTableComponent } from './components/analytics-table/analytics-table.component';
 import { MaterialModule } from './modules/material/material.module';
-import { FormsModule } from '@angular/forms'; // Import FormsModule if you are using template-driven forms
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire/compat';             // Use /compat
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // Use /compat
+import { environment } from './environment';           // ✅ FIXED
+
+console.log('Firebase initialized:', environment.firebase);
 
 @NgModule({
   declarations: [
@@ -26,9 +31,11 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase), // ✅ Initialize Firebase
+    AngularFirestoreModule                                // ✅ Enable Firestore
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

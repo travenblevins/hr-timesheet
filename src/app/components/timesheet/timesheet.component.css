@@ -36,4 +36,9 @@ h2 {
     text-align: center;
 }
 
+.submit {
+  width: 75px;
+  margin-left: auto;
+  margin-top: 15px;
+}
 
