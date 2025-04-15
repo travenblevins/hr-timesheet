@@ -10,10 +10,18 @@ import { TopNavbarComponent } from './components/top-navbar/top-navbar.component
 import { AnalyticsTableComponent } from './components/analytics-table/analytics-table.component';
 import { MaterialModule } from './modules/material/material.module';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire/compat';             // Use /compat
-import { AngularFirestoreModule } from '@angular/fire/compat/firestore'; // Use /compat
-import { environment } from './environment';           // ✅ FIXED
+import {
+  HttpClientModule,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { AngularFireModule } from '@angular/fire/compat'; // Use /compat
+import {
+  AngularFirestore,
+  AngularFirestoreModule,
+} from '@angular/fire/compat/firestore'; // Use /compat
+import { environment } from './environment'; // ✅ FIXED
+import { EmployeeService } from './services/employee.service';
 
 console.log('Firebase initialized:', environment.firebase);
 
@@ -24,7 +32,7 @@ console.log('Firebase initialized:', environment.firebase);
     TimesheetComponent,
     AnalyticsComponent,
     TopNavbarComponent,
-    AnalyticsTableComponent
+    AnalyticsTableComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,9 +41,16 @@ console.log('Firebase initialized:', environment.firebase);
     FormsModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase), // ✅ Initialize Firebase
-    AngularFirestoreModule                                // ✅ Enable Firestore
+    AngularFirestoreModule, // ✅ Enable Firestore
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: EmployeeService,
+      useFactory: (afs: AngularFirestore) => new EmployeeService(afs),
+      deps: [AngularFirestore],
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

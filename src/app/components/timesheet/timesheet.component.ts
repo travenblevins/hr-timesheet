@@ -6,7 +6,7 @@ import { Employee } from '../../interfaces/employee';
 import { FormControl, AbstractControl, ValidatorFn } from '@angular/forms';
 import { EmployeeService } from '../../services/employee.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
 import { NgZone } from '@angular/core';
 
 @Component({
@@ -41,7 +41,6 @@ export class TimesheetComponent {
     private zone: NgZone
   ) {}
 
-  
   addEmployee(): void {
     if (this.employeeNameFC.value) {
       this.employeeId++;
@@ -97,5 +96,24 @@ export class TimesheetComponent {
           console.error('Error saving employee hours:', error);
         });
     });
+  }
+  ngOnInit(): void {
+    this.$departments = this.DepartmentsService.getDepartments();
+
+    this.$departments
+      .pipe(
+        switchMap((departments) => {
+          this.department = departments.find(
+            (dept) => dept.id === this.route.snapshot.params['id']
+          );
+          return this.employeeService.getEmployeeHoursByDepartment(
+            this.department.id
+          );
+        }),
+        tap((employees) => {
+          this.employees = employees;
+        })
+      )
+      .subscribe();
   }
 }
