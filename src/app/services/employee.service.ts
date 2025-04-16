@@ -41,7 +41,6 @@ export class EmployeeService {
         })
     );
   }
-
   updateEmployeeHours(employee: Employee): Observable<void> {
     return from(
       this.employeeHoursCollection.doc(employee.id).update({ ...employee })
