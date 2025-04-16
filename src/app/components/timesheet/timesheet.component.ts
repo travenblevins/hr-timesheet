@@ -75,27 +75,29 @@ export class TimesheetComponent {
       return error;
     };
   }
-  deleteEmployee(employee: Employee): void {
-    this.employees = this.employees.filter((e) => e !== employee);
+  deleteEmployee(employee: Employee, index: number): void {
+    if (employee.id) {
+      this.employeeService.deleteEmployeeHours(employee).subscribe(() => {
+        this.zone.run(() => {
+          this.employees.splice(index, 1);
+        });
+      });
+    } else {
+      this.zone.run(() => {
+        this.employees.splice(index, 1);
+      });
+    }
   }
   submit(): void {
-    console.log('Submitting employees:', this.employees);
-
-    this.zone.run(() => {
-      const savePromises = this.employees.map((employee) => {
-        console.log('Saving employee:', employee);
-        return this.employeeService.saveEmployeeHours(employee);
-      });
-
-      Promise.all(savePromises)
-        .then(() => {
-          console.log('All employees saved successfully');
-          this.router.navigate(['./departments']);
-        })
-        .catch((error) => {
-          console.error('Error saving employee hours:', error);
-        });
+    this.employees.forEach((employee) => {
+      if (employee.id) {
+        this.employeeService.updateEmployeeHours(employee);
+      } else {
+        this.employeeService.saveEmployeeHours(employee);
+      }
     });
+
+    this.router.navigate(['./departments']);
   }
   ngOnInit(): void {
     this.$departments = this.DepartmentsService.getDepartments();

@@ -39,7 +39,6 @@ console.log('Firebase initialized:', environment.firebase);
     AppRoutingModule,
     MaterialModule,
     FormsModule,
-    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase), // ✅ Initialize Firebase
     AngularFirestoreModule, // ✅ Enable Firestore
   ],
