@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import { EnvironmentInjector, inject, Injectable } from '@angular/core';
 import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
 import { Employee } from '../interfaces/employee';
 import { from, map, Observable } from 'rxjs';
+import { runInInjectionContext } from '@angular/core';
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class EmployeeService {
   private employeeHoursCollection: AngularFirestoreCollection<Employee>;
-
+  private environmentInjector = inject(EnvironmentInjector);
   constructor(private db: AngularFirestore) {
     // Ensure the collection reference is initialized correctly
     this.employeeHoursCollection =
@@ -42,12 +44,17 @@ export class EmployeeService {
     );
   }
   updateEmployeeHours(employee: Employee): Observable<void> {
-    return from(
-      this.employeeHoursCollection.doc(employee.id).update({ ...employee })
-    );
+    return runInInjectionContext(this.environmentInjector, () => {
+      return from(
+        this.employeeHoursCollection.doc(employee.id).update({ ...employee })
+      );
+    });
+
   }
 
   deleteEmployeeHours(employee: Employee): Observable<void> {
-    return from(this.employeeHoursCollection.doc(employee.id).delete());
+    return runInInjectionContext(this.environmentInjector, () => {
+      return from(this.employeeHoursCollection.doc(employee.id).delete());
+    });
   }
 }
